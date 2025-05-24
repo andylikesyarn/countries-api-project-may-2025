@@ -1,0 +1,163 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.cardd {
+  max-width: 300px;
+  margin: 1rem;
+  box-sizing: border-box;
+  background: white;
+}
+
+/*code for switch adapted from: https://codepen.io/ahmadbassamemran/pen/yLBXBmy*/
+.switch {
+  position: relative;
+  width: 130px;
+  height: 50px;
+  margin: 0px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 25px;
+  box-shadow: inset 0px 0px 2px rgba(255, 255, 255, 0.7);
+  transition: background-image 0.7s ease-in-out;
+  outline: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+.switch:checked {
+  background-size: cover;
+  transition: background-image 1s ease-in-out;
+}
+.switch:after {
+  content: "";
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  transform: translateX(0px);
+  animation: off 0.7s forwards cubic-bezier(0.8, 0.5, 0.2, 1.4);
+  box-shadow: inset 5px -5px 4px rgba(53, 53, 53, 0.3);
+}
+
+@keyframes off {
+  0% {
+    transform: translateX(80px);
+    width: 46px;
+  }
+  50% {
+    width: 75px;
+    border-radius: 25px;
+  }
+  100% {
+    transform: translateX(0px);
+    width: 46px;
+  }
+}
+
+.switch:checked:after {
+  animation: on 0.7s forwards cubic-bezier(0.8, 0.5, 0.2, 1.4);
+  box-shadow: inset -5px -5px 4px rgba(53, 53, 53, 0.3);
+}
+
+@keyframes on {
+  0% {
+    transform: translateX(0px);
+    width: 46px;
+  }
+  50% {
+    width: 75px;
+    border-radius: 25px;
+  }
+  100% {
+    transform: translateX(80px);
+    width: 46px;
+  }
+}
+/*end of ahmad bassamemran's css animation code. this is a really cool slider, I changed the background images*/
+.day {
+  background-color: lightblue;
+  color: black;
+  border: 1px solid black;
+}
+/*This code changes the button in day mode*/
+.day button {
+  background-color: rgb(28, 167, 214);
+  color: black;
+  border: 1px solid black;
+}
+
+.day .selected {
+  background-color: rgb(137, 229, 137);
+  color: rgb(92, 8, 8);
+  border: 2px solid black;
+  font-weight: bold;
+}
+/*sets Night mode baseline colors*/
+.night {
+  background-color: darkslategray;
+  color: white;
+  border: 1px solid white;
+}
+
+/*/should be coding the bg color for cards, not sure why it's not. */
+.night .card {
+  background-color: black;
+  color: white;
+}
+
+.card Link {
+  text-decoration: none;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+} /*shoutout to the line of code that finally made the app take up the full widght*/
