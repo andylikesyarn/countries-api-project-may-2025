@@ -15,10 +15,12 @@ function SavedCountries() {
 
   const [refresh, setRefresh] = useState(false);
 
-  const refreshList = () => {
+function refreshList() {
     setRefresh(!refresh);
-  };
-
+  };//my logic here was rthat if i set refresh to false
+//I would then be able to set it to true and refresh on change.
+//however i didn't realize react wld automatically re-render on change
+  //and MUST have built a dependency to this defunct function in SOMEWHEre bc the function breaks if I remove it. 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
     console.log(name, value);
