@@ -2,6 +2,8 @@ import { useState } from "react";
 import ComponentCard from "../components/ComponentCard";
 
 function SavedCountries() {
+  
+  //initial vars
   const [submitted, setSubmitted] = useState(false); //this sets the initial value to false, so we don't render the wrong component.
 
   const [formData, setFormData] = useState({
