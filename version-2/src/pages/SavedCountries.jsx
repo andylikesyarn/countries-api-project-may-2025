@@ -48,7 +48,7 @@ function refreshList() {
   }; //pulls saved countries from LS.
   // If data exists, parses JSON into array or
   // if data !exist, returns emoty array.
-  //
+  //yay error handling
 
   const countries = getData();
   //sets countries == to result of GetData: array of countries if SavedCountries exists in LS
