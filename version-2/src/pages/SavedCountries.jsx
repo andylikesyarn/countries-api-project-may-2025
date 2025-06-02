@@ -2,6 +2,8 @@ import { useState } from "react";
 import ComponentCard from "../components/ComponentCard";
 
 function SavedCountries() {
+  
+  //initial vars
   const [submitted, setSubmitted] = useState(false); //this sets the initial value to false, so we don't render the wrong component.
 
   const [formData, setFormData] = useState({
@@ -15,10 +17,12 @@ function SavedCountries() {
 
   const [refresh, setRefresh] = useState(false);
 
-  const refreshList = () => {
+function refreshList() {
     setRefresh(!refresh);
-  };
-
+  };//my logic here was rthat if i set refresh to false
+//I would then be able to set it to true and refresh on change.
+//however i didn't realize react wld automatically re-render on change
+  //and MUST have built a dependency to this defunct function in SOMEWHEre bc the function breaks if I remove it. 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
     console.log(name, value);
@@ -44,7 +48,7 @@ function SavedCountries() {
   }; //pulls saved countries from LS.
   // If data exists, parses JSON into array or
   // if data !exist, returns emoty array.
-  //
+  //yay error handling
 
   const countries = getData();
   //sets countries == to result of GetData: array of countries if SavedCountries exists in LS
