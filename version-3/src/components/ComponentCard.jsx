@@ -70,10 +70,11 @@ function ComponentCard({
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ country_name: countryData.name.common }),
+          body: JSON.stringify({ country_name: commonCountryName }),
         }
       );
       if (!response.ok) throw new Error("failed to save");
+      setRefresh(!refresh);
     } catch (error) {
       console.log("there was an error");
     }
