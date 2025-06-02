@@ -1,7 +1,7 @@
 function SaveButton({ onClick, text }) {
-  {
-    /* Sets name and param names  */
-  }
+  
+
+
   return (
     <div className="wrapper">
       <button className="post-like" onClick={onClick}>
