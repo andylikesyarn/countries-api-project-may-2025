@@ -52,16 +52,6 @@ function ComponentCard({
     fetchSavedCountries();
   }, [refresh, commonCountryName]);
 
-  /*ssavedCountries = fetch(
-          "https://backend-answer-keys.onrender.com/get-all-saved-countries",
-
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ country_name: countryData.name.common }),
-          }
-        );*/
-
   const onClick = async () => {
     try {
       const response = await fetch(
@@ -74,22 +64,10 @@ function ComponentCard({
         }
       );
       if (!response.ok) throw new Error("failed to save");
-      setRefresh(!refresh);
     } catch (error) {
       console.log("there was an error");
     }
   };
-
-  //remove country from saved countries based on its cca3 code
-  /*function unSave(cca3) {
-    let savedCountriess =
-      JSON.parse(localStorage.getItem("savedCountries")) || []; // //makes var to hold savedCOntries data from LS
-    savedCountries = savedCountries.filter((item) => item.cca3 !== cca3);
-    //filter and save ONLY items with cca3!==to the CCa3 of the country whose button u just clicked on.
-    localStorage.setItem("savedCountries", JSON.stringify(savedCountries)); //set savedCOuntries in Local Storage == to the adjusted val of savedCountries
-    setRefresh(!refresh); //set refresh  == to true (it is set to false on card re-render)
-    onUnsave && onUnsave(); //do this IF onUnsave exists and is a function
-  }*/
 
   return (
     <div className="card cardd" style={{ width: "250px" }}>

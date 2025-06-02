@@ -13,27 +13,27 @@ export default function CountryDetail() {
       try {
         const response = await fetch(url); //set response equal to async fetch
         if (!response.ok) {
-          //if response bad
+          //if response is not ok
           throw new Error(`Response status: ${response.status}`);
           //throw error explaining response status
         }
         const json = await response.json(); //set var named json == to response.json (possible for this to incl. multiple countries)
         const countryData = json[0]; //set countryData = to ONLY the first one
-        setCountry(countryData);
+        setCountry(countryData); //sets country data in country var
 
-        //this needs to change to storing in the backend.
+        //set apiResponse == to result
         let apiResponse = await fetch(
           "https://backend-answer-keys.onrender.com/update-one-country-count",
-
+          //NOW we're going to post an update to the data in the backend
           {
-            method: "POST",
+            method: "POST",//we're posting data
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ country_name: countryData.name.common }),
           }
         );
         const apiData = await apiResponse.json();
         console.log("Backend API response:", apiData);
-        setCount(apiData.newCount);
+        setCount(apiData.newCount); //set count var to n
       } catch (error) {
         console.error(error.message); //if error, console.log error message
       }
