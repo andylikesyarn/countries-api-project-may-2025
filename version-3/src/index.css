@@ -135,6 +135,6 @@ body {
   margin-top: 20rem;
 }
 
-
-
-
+.display-none {
+  display: none;
+}

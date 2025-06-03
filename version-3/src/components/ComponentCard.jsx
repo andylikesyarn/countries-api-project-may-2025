@@ -13,6 +13,7 @@ function ComponentCard({
   cca3,
   count,
   onUnsave,
+  classes,
 }) {
   ///VARS
   let countryDat = {
@@ -37,9 +38,7 @@ function ComponentCard({
   useEffect(() => {
     const fetchSavedCountries = async () => {
       try {
-        const response = await fetch(
-          "https://backend-answer-keys.onrender.com/get-all-saved-countries"
-        );
+        const response = await fetch("/api/get-all-saved-countries");
         if (!response.ok) throw new Error("Failed to fetch saved countries");
         const data = await response.json();
         setSsavedCountries(data);
@@ -55,7 +54,7 @@ function ComponentCard({
   const onClick = async () => {
     try {
       const response = await fetch(
-        "https://backend-answer-keys.onrender.com/save-one-country",
+        "/api/save-one-country",
 
         {
           method: "POST",
@@ -64,6 +63,7 @@ function ComponentCard({
         }
       );
       if (!response.ok) throw new Error("failed to save");
+      setRefresh((prev) => !prev);
     } catch (error) {
       console.log("there was an error");
     }
@@ -99,7 +99,7 @@ function ComponentCard({
           If the length !>0, display text == "none"
            */}
       </p>
-      <p>Viewed {count || 0} times.</p>
+      <p className={classes}>Viewed {count || 0} times.</p>
 
       {!isSaved && (
         <SaveButton className="pinkButton" text="🤍" onClick={onClick} />

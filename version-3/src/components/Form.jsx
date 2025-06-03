@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import ComponentCard from "../components/ComponentCard";
 import SingleCountryCall from "../components/SingleCountryCall.jsx";
 
-function SavedCountries() {
-  const [submitted, setSubmitted] = useState(false); //this sets the initial value to false, so we don't render the wrong component.
-  const [savedCountries, setSavedCountries] = useState([]);
+function Form() {
+  const [submitted, setSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -33,12 +32,6 @@ function SavedCountries() {
 
   console.log(SavedCountries);
 
-  const [refresh, setRefresh] = useState(false);
-
-  const refreshList = () => {
-    setRefresh(!refresh);
-  };
-
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
     console.log(name, value);
@@ -46,8 +39,6 @@ function SavedCountries() {
       ...prevFormData,
       [name]: type === "checkbox" ? checked : value,
     }));
-    //prevFromData allows us to make a copy of formData, and then add new stuff
-    // setFormData(newData)
   }
 
   const handleSubmit = (event) => {
@@ -60,25 +51,6 @@ function SavedCountries() {
 
   return (
     <>
-      <div
-        className="container cardFormatting"
-        style={{
-          paddingTop: "5rem",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "1rem",
-          justifyContent: "space-between",
-        }}
-      >
-        {savedCountries.map((savedCountry) => (
-          <div className="row" key={savedCountry.country_name}>
-            <SingleCountryCall name={savedCountry.country_name} />
-          </div>
-        ))}
-        {/*Above code passes vars to component card from savedCountries list to render only
-        saved countries on this page */}
-      </div>
-
       {submitted ? (
         <p className="result"> Yay! Tu l'as fait!</p>
       ) : (
@@ -133,9 +105,8 @@ function SavedCountries() {
           <input type="submit"></input>
         </form>
       )}
-      {/*form recycled from last semester's help requestform w/ some changes */}
     </>
   );
 }
 
-export default SavedCountries;
+export default Form;

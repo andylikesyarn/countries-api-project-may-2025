@@ -1,9 +1,6 @@
 import ComponentCard from "../components/ComponentCard";
 
 export default function Home({ countryList, userName }) {
-  const countryViews = JSON.parse(localStorage.getItem("CountryViews")) || {};
-  //pulls up either countryviews# or empty obj if no countries have been saved.
-
   return (
     <div>
       <div id="buttonBox"></div>
@@ -19,7 +16,7 @@ export default function Home({ countryList, userName }) {
       >
         {countryList.map((country, id) => {
           //map country and id in COuntryList
-          const count = countryViews[country.name.common] || 0;
+          //const count = countryViews[country.name.common] || 0;
           //count == val in country Views if it exists
           //or 0 if it does not
           return (
@@ -43,8 +40,9 @@ export default function Home({ countryList, userName }) {
                 //pass country border list or undefined as prop value
                 cca3={country?.cca3 || "undefined"}
                 //pass country cca3 or undefined as prop value
-                count={count}
+                //count={count}
                 //pass view count: error handling happens in var assignment up top so no ternary statement needed.
+                classes="display-none"
               />
             </div>
           );

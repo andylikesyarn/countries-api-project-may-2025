@@ -59,7 +59,8 @@ function App() {
         console.error(error.message); //error handling part 2, generates error in console.
       }
     };
-    getData(); //run getData
+    getData();
+    console.log(countryList); //run getData
   }, []); //and there are no dependencies.
 
   /*function CodeToCountry(code) {
@@ -103,7 +104,7 @@ function App() {
                   className="nav-item active float-left"
                   style={{ paddingLeft: "2rem", textAlign: "left" }}
                 >
-                  <Link to="/">
+                  <Link to="/" countrylist={countryList}>
                     {/* Home link*/}
                     <p>Where in the world?</p>
                     {/*Home link text */}

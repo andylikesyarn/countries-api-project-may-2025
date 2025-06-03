@@ -23,10 +23,10 @@ export default function CountryDetail() {
 
         //set apiResponse == to result
         let apiResponse = await fetch(
-          "https://backend-answer-keys.onrender.com/update-one-country-count",
+          "/api/update-one-country-count",
           //NOW we're going to post an update to the data in the backend
           {
-            method: "POST",//we're posting data
+            method: "POST", //we're posting data
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ country_name: countryData.name.common }),
           }

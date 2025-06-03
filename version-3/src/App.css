@@ -161,3 +161,7 @@ body,
   margin: 0;
   padding: 0;
 } /*shoutout to the line of code that finally made the app take up the full widght*/
+
+.display-none {
+  display: none;
+}
