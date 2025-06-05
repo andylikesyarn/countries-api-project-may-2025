@@ -42,7 +42,7 @@ export default function SingleCountryCall({ name, classes }) {
       }}
     >
       <div className="row">
-  {/* component card for ONLY the one country */}
+        {/* component card for ONLY the one country */}
         <ComponentCard
           flag={country?.flags?.svg || "undefined"}
           commonCountryName={country?.name?.common || "undefined"}
@@ -57,7 +57,6 @@ export default function SingleCountryCall({ name, classes }) {
           neighbors={country?.borders || "none"}
           cca3={country?.cca3 || "undefined"}
           classes={classes}
-  {/* class prop lets me make view count invisible if i want to */}
         />
       </div>
     </div>

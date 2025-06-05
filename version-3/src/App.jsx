@@ -43,7 +43,8 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       //setting up asynch function
-      const url = "https://restcountries.com/v3.1/all?fields=name,flags,population,capital,region,borders";
+      const url =
+        "https://restcountries.com/v3.1/all?fields=name,flags,population,capital,region,borders";
       // above line sets api endpoint
       try {
         const response = await fetch(url); //make fetch happen; const = result of fetching url
