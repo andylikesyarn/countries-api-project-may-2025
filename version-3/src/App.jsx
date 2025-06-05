@@ -43,9 +43,8 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       //setting up asynch function
-      const url = "https://restcountries.com/v3.1/all"; //replace this line based on api url
+      const url = "https://restcountries.com/v3.1/all?fields=name,flags,population,capital,region,borders";
       // above line sets api endpoint
-      // also this is what I need to fix for dynamic url,then that needs to go into router.
       try {
         const response = await fetch(url); //make fetch happen; const = result of fetching url
         if (!response.ok) {

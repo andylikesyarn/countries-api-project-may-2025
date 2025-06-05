@@ -46,15 +46,6 @@ I think this needs to happen on the button.
 
 Actually no: needs to go in the component card bc this is the parent passing the onClick function down. 
 
-let apiResponse = await fetch(
-"https://backend-answer-keys.onrender.com/update-one-country-count",
+### questions
 
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ country_name: countryData.name.common }),
-          }
-        );
-        const apiData = await apiResponse.json();
-        console.log("Backend API response:", apiData);
-        setCount(apiData.newCount);
+- does user_id populate automatically from the API?

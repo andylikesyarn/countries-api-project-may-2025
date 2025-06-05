@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import ComponentCard from "./ComponentCard";
 
-export default function SingleCountryCall({ name }) {
+//this component sends a get request for data from EACH country in the savedlist
+
+export default function SingleCountryCall({ name, classes }) {
   const [country, setCountry] = useState(null);
   console.log("single country call: ", name);
 
+  //run api call for 1 country
   useEffect(() => {
     const getData = async () => {
       const url = `https://restcountries.com/v3.1/name/${name}`;
@@ -15,7 +18,7 @@ export default function SingleCountryCall({ name }) {
         }
         const json = await response.json();
         const countryData = json[0];
-        setCountry(countryData);
+        setCountry(countryData); //set country data
       } catch (error) {
         console.error(error.message);
       }
@@ -39,6 +42,7 @@ export default function SingleCountryCall({ name }) {
       }}
     >
       <div className="row">
+  {/* component card for ONLY the one country */}
         <ComponentCard
           flag={country?.flags?.svg || "undefined"}
           commonCountryName={country?.name?.common || "undefined"}
@@ -52,6 +56,8 @@ export default function SingleCountryCall({ name }) {
           capital={country?.capital?.[0] || "undefined"}
           neighbors={country?.borders || "none"}
           cca3={country?.cca3 || "undefined"}
+          classes={classes}
+  {/* class prop lets me make view count invisible if i want to */}
         />
       </div>
     </div>

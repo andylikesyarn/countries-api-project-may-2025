@@ -1,62 +1,35 @@
 import { useState, useEffect } from "react";
 import ComponentCard from "../components/ComponentCard";
 import SingleCountryCall from "../components/SingleCountryCall.jsx";
+import Form from "../components/Form.jsx";
 
 function SavedCountries() {
-  const [submitted, setSubmitted] = useState(false); //this sets the initial value to false, so we don't render the wrong component.
+  //const [submitted, setSubmitted] = useState(false); //this sets the initial value to false, so we don't render the wrong component.
   const [savedCountries, setSavedCountries] = useState([]);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    apellido: "",
-    email: "",
-    message: "",
-    type: "",
-    consent: "",
-  });
-
+  //this sets the saved countries list to the set of those fetched from the API
   useEffect(() => {
     const fetchSavedCountries = async () => {
       try {
-        const response = await fetch("/api/get-all-saved-countries", {
-          method: "GET",
-        });
+        const response = await fetch(
+          "/api/get-all-saved-countries", //specify correct endpoint
+          {
+            method: "GET", //specify method
+          }
+        );
         if (!response.ok) throw new Error("Failed to fetch saved countries");
+        //error bound if it doesn't work
         const data = await response.json();
+        //set data == to response
         setSavedCountries(data);
+        //  set saved countries set == to data.
       } catch (error) {
         console.error("Error fetching saved countries:", error);
       }
     };
     fetchSavedCountries();
-  }, []);
-
-  console.log(SavedCountries);
-
-  const [refresh, setRefresh] = useState(false);
-
-  const refreshList = () => {
-    setRefresh(!refresh);
-  };
-
-  function handleChange(e) {
-    const { name, value, type, checked } = e.target;
-    console.log(name, value);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-    //prevFromData allows us to make a copy of formData, and then add new stuff
-    // setFormData(newData)
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setSubmitted(true); //changes value of setSubmitted on click.
-    localStorage.setItem("userData", JSON.stringify(formData));
-  }; //func that adds user data to localStorage, and sets submitted val to true
-
-  console.log(savedCountries);
+    //run function
+  }, []); //no dependencies.
 
   return (
     <>
@@ -72,68 +45,17 @@ function SavedCountries() {
       >
         {savedCountries.map((savedCountry) => (
           <div className="row" key={savedCountry.country_name}>
-            <SingleCountryCall name={savedCountry.country_name} />
+            <SingleCountryCall
+              name={savedCountry.country_name}
+              classes="display-none"
+            />
           </div>
         ))}
-        {/*Above code passes vars to component card from savedCountries list to render only
-        saved countries on this page */}
+        {/*Above code passes prop to Single Country Call from savedCountries list to render ONLY saved countries on this page, by mapping saved countries over that component  */}
       </div>
-
-      {submitted ? (
-        <p className="result"> Yay! Tu l'as fait!</p>
-      ) : (
-        <form className="userForm" onSubmit={handleSubmit}>
-          <br></br>
-          <label htmlFor="name">Nombre y Appellido</label>
-
-          <input
-            required
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          ></input>
-
-          <br></br>
-          <label htmlFor="country">Correo Electrónico</label>
-          <input
-            required
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          ></input>
-          <br></br>
-          <label>País</label>
-          <input
-            required
-            type="text"
-            id="country"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-          ></input>
-          <br></br>
-          <label className="left" htmlFor="message">
-            Biografía{" "}
-          </label>
-          <br></br>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows="4"
-            cols="50"
-          ></textarea>
-          <br></br>
-          <br></br>
-          <input type="submit"></input>
-        </form>
-      )}
-      {/*form recycled from last semester's help requestform w/ some changes */}
+      <Form />
+      {/* form imported here as a separate component...too confusing otherwise imo
+       */}
     </>
   );
 }
