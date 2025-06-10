@@ -33,10 +33,31 @@ function App() {
   //
   ////FUNCTIONS
   //
-  //pull userData from local storage (this ensures the app is rendered w/ existing storedc countries displayed with a red heart. )
-  useEffect(() => {
+  //adjust userdata to come from api rather than from localstorage
+  /*useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
     setUserDat(userData);
+  }, []);*/
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const response = await fetch(
+          "/api/get-newest-user", //specify correct endpoint
+          {
+            method: "GET", //specify method
+          }
+        );
+        if (!response.ok) throw new Error("Failed to fetch user's name");
+        //error bound if it doesn't work
+        const data = await response.json();
+        //set data == to response
+        setUserDat(data[0]);
+        //  set saved countries set == to data.
+      } catch (error) {
+        console.error("Error fetching user name:", error);
+      }
+    };
+    fetchUserName();
   }, []);
 
   //this runs the API call and sets the resulting data == to countryList.
