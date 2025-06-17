@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 //component imports
 import Slider from "./components/Slider.jsx";
 import SavedCountries from "./pages/SavedCountries.jsx";
+import localData from "./localData";
 
 function App() {
   ///
@@ -18,7 +19,7 @@ function App() {
   const night = "/assets/images/night.png";
   //var for night mode toggle
   const [isDaytime, setIsDaytime] = useState(true);
-  //
+  //More countries
 
   ///
   //Make vars for data
@@ -65,7 +66,7 @@ function App() {
     const getData = async () => {
       //setting up asynch function
       const url =
-        "https://restcountries.com/v3.1/all?fields=name,flags,population,capital,region,borders";
+        "https://restcountries.com/v3.1/all?fields=name,flags,population,capital,region,borders,translations";
       // above line sets api endpoint
       try {
         const response = await fetch(url); //make fetch happen; const = result of fetching url
@@ -74,14 +75,15 @@ function App() {
           throw new Error(`Response status: ${response.status}`); //give response status if response not successful
         }
         const json = await response.json(); //var named json is set equal to val of response (eg the data)
-        setCountryList(json); //replace this line based on var storing data
+        setCountryList([...json, ...localData]); //replace this line based on var storing data
         //above line saves data output to var holding country list through setter function
       } catch (error) {
         console.error(error.message); //error handling part 2, generates error in console.
       }
     };
     getData();
-    console.log(countryList); //run getData
+    console.log(countryList);
+    //run getData
   }, []); //and there are no dependencies.
 
   /*function CodeToCountry(code) {

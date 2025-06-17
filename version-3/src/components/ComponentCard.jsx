@@ -12,20 +12,9 @@ function ComponentCard({
   neighbors,
   cca3,
   count,
-  onUnsave,
   classes,
 }) {
   ///VARS
-  let countryDat = {
-    commonCountryName,
-    fullCountryName,
-    population,
-    region,
-    capital,
-    flag,
-    neighbors,
-    cca3,
-  };
 
   {
     /*Note that count and onUnsave are props but not part of countryDat. CountryDat includes only the data from the savedCountries object in localStorage/. I made a different count object */
@@ -34,6 +23,41 @@ function ComponentCard({
   const [refresh, setRefresh] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [ssavedCountries, setSsavedCountries] = useState([]);
+
+  const [english, setEnglish] = useState([
+    "Population",
+    "Region",
+    "Capital",
+    "Bordering Countries",
+    "Viewed",
+    "times",
+  ]);
+  const spanish = [
+    "Población",
+    "Región",
+    "Capital",
+    "Países Fronterizos",
+    "Visto",
+    "veces",
+  ];
+  const french = [
+    "Population",
+    "Région",
+    "Capitale",
+    "Pays Frontaliers",
+    "Vu",
+    "fois",
+  ];
+  const russian = [
+    "Население",
+    "Регион",
+    "Столица",
+    "Соседние страны",
+    "Просмотрено",
+    "раз",
+  ];
+
+  const [language, setLanguage] = useState(english);
 
   useEffect(() => {
     const fetchSavedCountries = async () => {
@@ -86,11 +110,17 @@ function ComponentCard({
         <h3>{commonCountryName}</h3>
         <p>{fullCountryName}</p>
       </div>
-      <p>Population: {population}</p>
-      <p>Region: {region}</p>
-      <p>Capitol: {capital}</p>
       <p>
-        Bordering Countries:
+        {language[0]}: {population}
+      </p>
+      <p>
+        {language[1]}: {region}
+      </p>
+      <p>
+        {language[2]}: {capital}
+      </p>
+      <p>
+        {language[3]}:
         {Array.isArray(neighbors) && neighbors.length > 0
           ? neighbors.join(" ")
           : "none"}
@@ -99,7 +129,9 @@ function ComponentCard({
           If the length !>0, display text == "none"
            */}
       </p>
-      <p className={classes}>Viewed {count || 0} times.</p>
+      <p className={classes}>
+        {language[4]} {count || 0} {language[5]}.
+      </p>
 
       {!isSaved && (
         <SaveButton className="pinkButton" text="🤍" onClick={onClick} />
