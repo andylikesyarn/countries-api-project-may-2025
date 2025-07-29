@@ -28,6 +28,38 @@ async function getAllUsers() {
   console.log(result);
   return result.rows;
 }
+
+// Helper function for /get-latest-users
+async function getLatestUser() {
+  const result = await db.query(
+    "SELECT * FROM users ORDER BY user_id DESC LIMIT 1"
+  );
+  console.log(result);
+  return result.rows[0];
+}
+
+// Helper function for /add-one-user
+async function addOneUser(user) {
+  //await result of database query
+  await db.query(
+    //sql query inserting vals into user
+    "INSERT INTO countries (name, email, country, bio) VALUES ($1, $2, $3, $4)",
+    //
+    [user.name, user.email, user.country, country.bio]
+  );
+}
+// Helper function for /update-one-country
+async function updateOneUser(name, updatedFields) {
+  //sets fields we're inputting / changing
+  const { email, country, bio } = updatedFields;
+  await db.query(
+    //update country categories in the following order where name is as specificed
+    //sql
+    "UPDATE users SET email = $1, country = $2, bio = $3 WHERE name = $4",
+    //array needed to insert into sql categories
+    [email, country, bio, name]
+  );
+}
 /*
 // Helper function for /get-one-country/:name
 async function getOneCountry(countryName) {
@@ -74,6 +106,43 @@ app.get("/get-all-users", async (req, res) => {
   const allUsers = await getAllUsers();
   // res.send(JSON.stringify(allCountries));
   res.json(allUsers);
+});
+
+// GET /get-latest-user
+app.get("/get-latest-user", async (req, res) => {
+  const lastUser = await getLatestUser();
+  res.json(lastUser);
+});
+
+// POST /add-one-country
+app.post("/add-one-user", async (req, res) => {
+  //country is pulled from request body and saved here
+  const newUser = req.body;
+  //try running addOneCountry
+  try {
+    await addOneUser(newUser);
+    //if it works, display Country Added
+    res.json({ success: true, message: "User added." });
+  } catch (err) {
+    //if it does not work, send error message.
+    res.status(400).json({ success: false, error: err.message });
+  }
+});
+
+// POST /update-one-user
+//defining a post request at the endpoint update-one-user
+app.post("/update-one-user", async (req, res) => {
+  //country categories are pulled from request body and saved here
+  const { name, email, country, bio } = req.body;
+  //run helper function, setting aboce var = to the second argument
+  try {
+    await updateOneUser(name, { email, country, bio });
+    //if it works, give country updated
+    res.json({ success: true, message: "User updated." });
+  } catch (err) {
+    //if it does not work, send error message.
+    res.status(400).json({ success: false, error: err.message });
+  }
 });
 /*
 // both functions res.send() and res.json() send a response
