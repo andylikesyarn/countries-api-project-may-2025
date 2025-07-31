@@ -43,61 +43,66 @@ async function addOneUser(user) {
   //await result of database query
   await db.query(
     //sql query inserting vals into user
-    "INSERT INTO countries (name, email, country, bio) VALUES ($1, $2, $3, $4)",
+    "INSERT INTO users (name, email, country_name, bio) VALUES ($1, $2, $3, $4)",
     //
-    [user.name, user.email, user.country, country.bio]
+    [user.name, user.email, user.country_name, user.bio]
   );
 }
-// Helper function for /update-one-country
+// Helper function for /update-one-user
 async function updateOneUser(name, updatedFields) {
   //sets fields we're inputting / changing
-  const { email, country, bio } = updatedFields;
+  const { email, country_name, bio } = updatedFields;
   await db.query(
     //update country categories in the following order where name is as specificed
     //sql
-    "UPDATE users SET email = $1, country = $2, bio = $3 WHERE name = $4",
+    "UPDATE users SET email = $1, country_name = $2, bio = $3 WHERE name = $4",
     //array needed to insert into sql categories
-    [email, country, bio, name]
+    [email, country_name, bio, name]
   );
 }
-/*
-// Helper function for /get-one-country/:name
-async function getOneCountry(countryName) {
-  const result = await db.query("SELECT * FROM countries WHERE name = $1", [
-    countryName,
-  ]);
-  return result.rows[0];
-}
+
 // Helper function for /delete-one-country/:name
 async function deleteOneCountry(name) {
   //sets fields we're inputting / changing
   const countryName = name;
-  await db.query("DELETE FROM countries WHERE name = $1", [countryName]);
+  await db.query("DELETE FROM saved_countries WHERE country_name = $1", [
+    countryName,
+  ]);
 }
 
 // Helper function for /add-one-country
-async function addOneCountry(country) {
+async function addOneCountry(saved_country) {
   //await result of database query
   await db.query(
     //sql query inserting vals into country
-    "INSERT INTO countries (name, category, can_fly, lives_in) VALUES ($1, $2, $3, $4)",
+    "INSERT INTO saved_countries (country_name) VALUES ($1)",
     //
-    [country.name, country.category, country.can_fly, country.lives_in]
+    [saved_country.country_name]
   );
 }
 // Helper function for /update-one-country
-async function updateOneCountry(name, updatedFields) {
+async function updateOneCountry(country_name) {
   //sets fields we're inputting / changing
-  const { category, can_fly, lives_in } = updatedFields;
-  await db.query(
-    //update country categories in the following order where name is as specificed
-    //sql
-    "UPDATE countries SET category = $1, can_fly = $2, lives_in = $3 WHERE name = $4",
-    //array needed to insert into sql categories
-    [category, can_fly, lives_in, name]
+  const result = await db.query(
+    `
+    INSERT INTO country_counts (country_name, count)
+    VALUES ($1, 1)
+    ON CONFLICT (country_name)
+      DO UPDATE SET count = country_counts.count + 1
+    RETURNING count;
+    `,
+    [country_name]
   );
+  return result.rows[0].count;
 }
-*/
+
+//helper function for get-saved-countries
+async function getSavedCountries() {
+  const result = await db.query("SELECT * FROM saved_countries");
+  console.log(result);
+  return result.rows;
+}
+
 // ---------------------------------
 // API Endpoints
 // ---------------------------------
@@ -133,10 +138,10 @@ app.post("/add-one-user", async (req, res) => {
 //defining a post request at the endpoint update-one-user
 app.post("/update-one-user", async (req, res) => {
   //country categories are pulled from request body and saved here
-  const { name, email, country, bio } = req.body;
+  const { name, email, country_name, bio } = req.body;
   //run helper function, setting aboce var = to the second argument
   try {
-    await updateOneUser(name, { email, country, bio });
+    await updateOneUser(name, { email, country_name, bio });
     //if it works, give country updated
     res.json({ success: true, message: "User updated." });
   } catch (err) {
@@ -144,7 +149,7 @@ app.post("/update-one-user", async (req, res) => {
     res.status(400).json({ success: false, error: err.message });
   }
 });
-/*
+
 // both functions res.send() and res.json() send a response
 // res.send() sends a response as a String
 // res.json() sends a response as a JSON object
@@ -167,7 +172,7 @@ app.delete("/delete-one-country/:name", async (req, res) => {
   //then return CountryName was deleted
   res.json(`${deleteCountry} was deleted`);
 
-  /*try {
+  try {
     await deleteOneCountry(deleteCountry);
     res.json({ success: true, message: "Country deleted." });
   } catch (err) {
@@ -194,15 +199,19 @@ app.post("/add-one-country", async (req, res) => {
 // POST /update-one-country
 //defining a post request at the endpoint update-one-country
 app.post("/update-one-country", async (req, res) => {
-  //country categories are pulled from request body and saved here
-  const { name, category, can_fly, lives_in } = req.body;
-  //run helper function, setting aboce var = to the second argument
+  const { country_name } = req.body;
   try {
-    await updateOneCountry(name, { category, can_fly, lives_in });
-    //if it works, give country updated
-    res.json({ success: true, message: "Country updated." });
+    const count = await updateOneCountry(country_name);
+    res.json({ success: true, count });
   } catch (err) {
-    //if it does not work, send error message.
     res.status(400).json({ success: false, error: err.message });
   }
-});*/
+});
+
+// GET /get-saved-users
+app.get("/get-saved-countries", async (req, res) => {
+  const allCountries = await getSavedCountries();
+  res.json(allCountries);
+});
+
+// -----// GET /get-all-countries

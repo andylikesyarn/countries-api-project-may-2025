@@ -35,7 +35,6 @@ function SavedCountries() {
       request: "",
       consent: "",
     });*/
-    console.log(formData);
   };
 
   //https://www.w3schools.com/jsref/event_onsubmit.asp

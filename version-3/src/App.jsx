@@ -32,6 +32,71 @@ function App() {
   const [searchInput, setSearchInput] = useState("");
 
   //
+
+  const languageOptions = {
+    english: {
+      population: "Population",
+      region: "Region",
+      capital: "Capital",
+      neighbors: "Bordering Countries",
+      viewed: "Viewed",
+      times: "times",
+      asia: "Asia",
+      africa: "Africa",
+      oceania: "Oceania",
+      europe: "Europe",
+      antarctic: "Antarctic",
+    },
+    spanish: {
+      population: "Población",
+      region: "Región",
+      capital: "Capital",
+      neighbors: "Países Fronterizos",
+      viewed: "Visto",
+      times: "veces",
+      name: "translations.spa",
+      asia: "Asia",
+      africa: "África",
+      oceania: "Oceanía",
+      europe: "Europa",
+      antarctic: "Antártida",
+      none: "ningunos",
+    },
+    french: {
+      population: "Population",
+      region: "Région",
+      capital: "Capitale",
+      neighbors: "Pays Frontaliers",
+      viewed: "Vu",
+      times: "fois",
+      name: "translations.fra",
+      asia: "Asie",
+      africa: "Afrique",
+      oceania: "Océanie",
+      europe: "Europe",
+      antarctic: "Antarctique",
+      none: "aucun"
+    },
+    russian: {
+      population: "Население",
+      region: "Регион",
+      capital: "Столица",
+      neighbors: "Соседние страны",
+      viewed: "Просмотрено",
+      times: "раз",
+      name: "translations.rus",
+      asia: "Азия",
+      africa: "Африка",
+      oceania: "Океания",
+      europe: "Европа",
+      antarctic: "Антарктида",
+      none: "никто",
+    },
+  };
+
+  const [language, setLanguage] = useState("english");
+  const labels = languageOptions[language];
+
   ////FUNCTIONS
   //
   //adjust userdata to come from api rather than from localstorage
@@ -39,6 +104,7 @@ function App() {
     const userData = JSON.parse(localStorage.getItem("userData"));
     setUserDat(userData);
   }, []);*/
+
   useEffect(() => {
     const fetchUserName = async () => {
       try {
@@ -59,7 +125,7 @@ function App() {
       }
     };
     fetchUserName();
-  }, []);
+  }, [language]);
 
   //this runs the API call and sets the resulting data == to countryList.
   useEffect(() => {
@@ -172,6 +238,19 @@ function App() {
                   />{" "}
                   {/*sets params that make the UI work for night/day mode */}
                 </li>
+                <li>
+                  <select
+                    id="language-select"
+                    name="language"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                  >
+                    <option value="english">English</option>
+                    <option value="spanish">Español</option>
+                    <option value="french">Français</option>
+                    <option value="russian">Русский</option>
+                  </select>
+                </li>
                 <li style={{ paddingLeft: "3rem" }}>
                   {" "}
                   <h1>Welcome, {userDat?.name || "Explorer"} </h1>{" "}
@@ -190,9 +269,25 @@ function App() {
           <Routes>
             {" "}
             {/*sets up routes */}
-            <Route path="/" element={<Home countryList={countryList} />} />
-            <Route path="/countryDetail/:name" element={<CountryDetail />} />
-            <Route path="/savedCountries" element={<SavedCountries />} />
+            <Route
+              path="/"
+              element={
+                <Home
+                  countryList={countryList}
+                  labels={labels}
+                  language={language}
+                  data={countryList}
+                />
+              }
+            />
+            <Route
+              path="/countryDetail/:name"
+              element={<CountryDetail labels={labels} data={countryList} />}
+            />
+            <Route
+              path="/savedCountries"
+              element={<SavedCountries labels={labels} data={countryList} />}
+            />
           </Routes>
         </div>
       </div>

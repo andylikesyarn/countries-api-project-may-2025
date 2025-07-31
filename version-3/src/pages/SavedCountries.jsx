@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, labels } from "react";
 import ComponentCard from "../components/ComponentCard";
 import SingleCountryCall from "../components/SingleCountryCall.jsx";
 import Form from "../components/Form.jsx";
 
-function SavedCountries() {
+function SavedCountries({ data, labels }) {
   //const [submitted, setSubmitted] = useState(false); //this sets the initial value to false, so we don't render the wrong component.
   const [savedCountries, setSavedCountries] = useState([]);
 
@@ -48,6 +48,7 @@ function SavedCountries() {
             <SingleCountryCall
               name={savedCountry.country_name}
               classes="display-none"
+              labels={labels}
             />
           </div>
         ))}

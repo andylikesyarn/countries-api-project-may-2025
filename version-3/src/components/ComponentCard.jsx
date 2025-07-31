@@ -13,6 +13,7 @@ function ComponentCard({
   cca3,
   count,
   classes,
+  labels,
 }) {
   ///VARS
 
@@ -23,41 +24,6 @@ function ComponentCard({
   const [refresh, setRefresh] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [ssavedCountries, setSsavedCountries] = useState([]);
-
-  const [english, setEnglish] = useState([
-    "Population",
-    "Region",
-    "Capital",
-    "Bordering Countries",
-    "Viewed",
-    "times",
-  ]);
-  const spanish = [
-    "Población",
-    "Región",
-    "Capital",
-    "Países Fronterizos",
-    "Visto",
-    "veces",
-  ];
-  const french = [
-    "Population",
-    "Région",
-    "Capitale",
-    "Pays Frontaliers",
-    "Vu",
-    "fois",
-  ];
-  const russian = [
-    "Население",
-    "Регион",
-    "Столица",
-    "Соседние страны",
-    "Просмотрено",
-    "раз",
-  ];
-
-  const [language, setLanguage] = useState(english);
 
   useEffect(() => {
     const fetchSavedCountries = async () => {
@@ -111,16 +77,16 @@ function ComponentCard({
         <p>{fullCountryName}</p>
       </div>
       <p>
-        {language[0]}: {population}
+        {labels.population}: {population}
       </p>
       <p>
-        {language[1]}: {region}
+        {labels.region}: {region}
       </p>
       <p>
-        {language[2]}: {capital}
+        {labels.capital}: {capital}
       </p>
       <p>
-        {language[3]}:
+        {labels.neighbors}:
         {Array.isArray(neighbors) && neighbors.length > 0
           ? neighbors.join(" ")
           : "none"}
@@ -130,7 +96,7 @@ function ComponentCard({
            */}
       </p>
       <p className={classes}>
-        {language[4]} {count || 0} {language[5]}.
+        {labels.viewed} {count || 0} {labels.times}.
       </p>
 
       {!isSaved && (

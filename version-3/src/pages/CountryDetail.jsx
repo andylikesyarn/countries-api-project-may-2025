@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ComponentCard from "../components/ComponentCard";
 import { useParams } from "react-router-dom";
 
-export default function CountryDetail() {
+export default function CountryDetail({ labels, data }) {
   const { name } = useParams(); //pulls name from url
   const [count, setCount] = useState(0);
   const [country, setCountry] = useState(null);
@@ -71,6 +71,7 @@ export default function CountryDetail() {
           neighbors={country?.borders || "none"} //this needs formatting for the case where there are bordering countries.
           count={count}
           cca3={country?.cca3 || "undefined"} //otherwise this is the same as other places I've commented it out, so Idk what else to add.
+          labels={labels}
         />
       </div>
     </div>

@@ -1,3 +1,3 @@
 export default function SavedCountries() {
-  return <p>dogs</p>;
+  return <p>saved countries page</p>;
 }
